@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                   if (state is AuthSuccess) {
                     Navigator.pushNamedAndRemoveUntil(
                       context,
-                      '/conversations',
+                      '/newsfeed',
                       (route) => false,
                     );
                   } else if (state is AuthFailure) {

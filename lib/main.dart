@@ -18,6 +18,7 @@ import 'package:swafa_app_frontend/features/message/domain/usecases/fetch_messag
 import 'package:swafa_app_frontend/features/message/presentation/bloc/message_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:swafa_app_frontend/features/newsfeed/presentation/pages/newsfeed_page.dart';
 import 'package:swafa_app_frontend/onboarding_page.dart';
 
 void main() async {
@@ -78,6 +79,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/login': (_) => const LoginPage(),
           '/register': (_) => const RegisterPage(),
+          '/newsfeed': (_) => const NewsFeedPage(),
           '/conversations': (_) => const ConversationsPage(),
         },
       ),

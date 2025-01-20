@@ -19,9 +19,8 @@ class AuthInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: DefaultColors.shade)
-      ),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: DefaultColors.shade)),
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
       ),
