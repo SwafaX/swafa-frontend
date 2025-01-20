@@ -23,6 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         event.username,
         event.email,
         event.password,
+        event.confirmPassword,
       );
       emit(AuthSuccess(message: "Registration successful"));
     } catch (e) {

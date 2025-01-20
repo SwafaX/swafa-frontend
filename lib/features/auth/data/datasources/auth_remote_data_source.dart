@@ -21,12 +21,13 @@ class AuthRemoteDataSource {
     required String username,
     required String email,
     required String password,
+    required String confirmPassword,
   }) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/register'),
         body: jsonEncode(
-            {'username': username, 'email': email, 'password': password}),
+            {'username': username, 'email': email, 'password': password, 'confirm_password': confirmPassword}),
         headers: {'Content-Type': 'application/json'},
       );
 

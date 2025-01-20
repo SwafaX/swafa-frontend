@@ -5,7 +5,7 @@ class RegisterUseCase {
   final AuthRepository repository;
   RegisterUseCase({required this.repository});
 
-  Future<UserEntity> call(String username, String email, String password) {
-    return repository.register(username, email, password);
+  Future<UserEntity> call(String username, String email, String password, String confirmPassword) {
+    return repository.register(username, email, password, confirmPassword);
   }
 }
