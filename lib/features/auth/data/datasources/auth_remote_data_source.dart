@@ -4,7 +4,7 @@ import 'package:swafa_app_frontend/features/auth/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class AuthRemoteDataSource {
-  final String baseUrl = 'http://10.0.2.2:8080/auth';
+  final String baseUrl = 'http://localhost:8000/api/v1/auth';
 
   Future<UserModel> login(
       {required String email, required String password}) async {
@@ -34,7 +34,7 @@ class AuthRemoteDataSource {
       print(response.statusCode);
       print(response.body);
 
-      return UserModel.fromJson(jsonDecode(response.body)['user']);
+      return UserModel.fromJson(jsonDecode(response.body)['data']);
     } catch (e) {
       print('Error: $e');
       rethrow;
