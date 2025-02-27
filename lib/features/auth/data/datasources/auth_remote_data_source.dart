@@ -5,6 +5,10 @@ import 'package:swafa_app_frontend/features/auth/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class AuthRemoteDataSource {
+<<<<<<< HEAD
+=======
+  final String baseUrl = 'http://localhost:8000/api/v1/auth';
+>>>>>>> 8675e5e4062c1c1b6dc0b84786d02a1dd32b3f00
 
   final String baseUrl;
 
@@ -54,7 +58,7 @@ class AuthRemoteDataSource {
       print(response.statusCode);
       print(response.body);
 
-      return UserModel.fromJson(jsonDecode(response.body)['user']);
+      return UserModel.fromJson(jsonDecode(response.body)['data']);
     } catch (e) {
       print('Error: $e');
       rethrow;
