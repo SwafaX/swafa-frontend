@@ -34,12 +34,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onLogin(LoginEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      final user = await loginUseCase.call(
+      final token = await loginUseCase.call(
         event.email,
         event.password,
       );
-      await _storage.write(key: 'token', value: user.token);
-      await _storage.write(key: 'userId', value: user.id);
+      await _storage.write(key: 'accessToken', value: token.accessToken);
+      await _storage.write(key: 'refreshToken', value: token.refreshToken);
       emit(AuthSuccess(message: "Login successful"));
     } catch (e) {
       emit(AuthFailure(error: "Login failed"));

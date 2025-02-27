@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:swafa_app_frontend/core/theme.dart';
 import 'package:swafa_app_frontend/features/newsfeed/presentation/pages/item_info_page.dart';
 
 class ItemCard extends StatelessWidget {
-  const ItemCard({super.key, required this.image});
+  const ItemCard({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.image,
+  });
+
+  final String title;
+  final String description;
   final String image;
 
   @override
@@ -16,42 +25,66 @@ class ItemCard extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder:  (context) => ItemInfoPage(image: image))
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ItemInfoPage(
+                    title: title,
+                    description: description,
+                    image: image,
+                  ),
+                ),
+              );
             },
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 image: DecorationImage(
-                  image: AssetImage(image.toString()),
+                  image: NetworkImage(image.toString()),
                   fit: BoxFit.cover,
                 ),
-                )
               ),
+            ),
           ),
-          // Positioned(
-          //   bottom: 30,
-          //   right: 0,
-          //   child: Container(
-          //     height: 104,
-          //     width: MediaQuery.of(context).size.width / 1.2,
-          //     padding: const EdgeInsets.all(16),
-          //     decoration: BoxDecoration(
-          //       color: Colors.white.withOpacity(0.8),
-          //       borderRadius: const BorderRadius.only(topLeft: Radius.circular(16), bottomLeft: Radius.circular(16)),
-          //     ),
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: [
-          //         Text('Malena Veronica, 23', style: TextStyle(color: ColorConstants.secondary, fontSize: 24, fontWeight: FontWeight.w500)),
-          //         const SizedBox(height: 12,),
-          //         Text('Fashion Designer at Victoria Secret', style: TextStyle(color: ColorConstants.secondary, fontSize: 16)),
-          //       ],
-          //     ),
-          //   ),
-          // )
+          Positioned(
+            bottom: 30,
+            right: 0,
+            child: Container(
+              height: 104,
+              width: MediaQuery.of(context).size.width / 1.2,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.8),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    bottomLeft: Radius.circular(16)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      color: DefaultColors.primary500,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    description,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: DefaultColors.primary500,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

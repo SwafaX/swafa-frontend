@@ -30,7 +30,7 @@ class _MessagePageState extends State<MessagePage> {
   }
 
   void fetchUserId() async {
-    userId = await _storage.read(key: 'userId') ?? '';
+    userId = await _storage.read(key: 'accessToken') ?? '';
     setState(() {
       userId = userId;
     });

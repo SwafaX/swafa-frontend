@@ -133,7 +133,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
           // Create an account button
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/register');
@@ -156,7 +156,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
           // Sign In link
           Padding(
-            padding: const EdgeInsets.only(bottom: 24),
+            padding: const EdgeInsets.only(bottom: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

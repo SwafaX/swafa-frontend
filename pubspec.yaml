@@ -41,6 +41,8 @@ dependencies:
   socket_io_client: ^3.0.2
   smooth_page_indicator: ^1.2.0+3
   appinio_swiper: ^2.1.1
+  get_it: ^8.0.3
+  flutter_svg: ^2.0.17
   
 
 dev_dependencies:

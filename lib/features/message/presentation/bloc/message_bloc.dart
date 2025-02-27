@@ -43,7 +43,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
 
   Future<void> _onSendMessage(
       SendMessageEvent event, Emitter<MessageState> emit) async {
-    String userId = await _storage.read(key: 'userId') ?? '';
+    String userId = await _storage.read(key: 'accessToken') ?? '';
     print('userId : $userId');
 
     final newMessage = {

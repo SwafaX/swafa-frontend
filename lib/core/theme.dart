@@ -65,19 +65,19 @@ class AppTheme {
       textTheme: const TextTheme(
         titleSmall: TextStyle(
           fontSize: FontSizes.standard,
-          color: Colors.white,
+          color: DefaultColors.primary500,
         ),
         titleMedium: TextStyle(
           fontSize: FontSizes.medium,
-          color: Colors.white,
+          color: DefaultColors.primary500,
         ),
         titleLarge: TextStyle(
           fontSize: FontSizes.large,
-          color: Colors.white,
+          color: DefaultColors.primary500,
         ),
         bodySmall: TextStyle(
           fontSize: FontSizes.small,
-          color: Colors.white,
+          color: DefaultColors.primary500,
         ),
       ),
     );
