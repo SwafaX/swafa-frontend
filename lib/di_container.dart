@@ -24,7 +24,7 @@ import 'package:swafa_app_frontend/features/trade/domain/usecases/fetch_trades_u
 final GetIt sl = GetIt.instance;
 
 void setupDependencies() {
-  // const String baseUrl = 'http://10.0.2.2:8080';
+  // const String baseUrl = 'http://10.0.2.2:8000/api/v1';
   const String baseUrl = 'https://api.mockapi.com';
 
   // Data Sources

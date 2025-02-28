@@ -21,84 +21,55 @@ class _ConversationsPageState extends State<ConversationsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Text(
-            'Recent',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ),
-        Container(
-          height: 100,
-          padding: const EdgeInsets.all(5),
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              _buildRecentContact(context, 'Barry'),
-              _buildRecentContact(context, 'Barry'),
-              _buildRecentContact(context, 'Alvin'),
-              _buildRecentContact(context, 'Dan'),
-              _buildRecentContact(context, 'Frank'),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Expanded(
-          child: Container(
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(50),
-              topRight: Radius.circular(50),
-            )),
-            child: BlocBuilder<ConversationsBloc, ConversationsState>(
-              builder: (context, state) {
-                if (state is ConversationsLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state is ConversationsLoaded) {
-                  return ListView.builder(
-                    itemCount: state.conversations.length,
-                    itemBuilder: (context, index) {
-                      final conversation = state.conversations[index];
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MessagePage(
-                                conversationId: conversation.id,
-                                receiver: conversation.participantName,
-                              ),
-                            ),
-                          );
-                        },
-                        child: _buildMessageTile(
-                          conversation.participantName,
-                          conversation.lastMessage,
-                          conversation.lastMessageTime.toString(),
+    return Expanded(
+      child: Container(
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(50),
+          topRight: Radius.circular(50),
+        )),
+        child: BlocBuilder<ConversationsBloc, ConversationsState>(
+          builder: (context, state) {
+            if (state is ConversationsLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is ConversationsLoaded) {
+              return ListView.builder(
+                itemCount: state.conversations.length,
+                itemBuilder: (context, index) {
+                  final conversation = state.conversations[index];
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MessagePage(
+                            conversationId: conversation.id,
+                            receiver: conversation.participantName,
+                          ),
                         ),
                       );
                     },
+                    child: _buildMessageTile(
+                      conversation.participantName,
+                      conversation.lastMessage,
+                      conversation.lastMessageTime.toString(),
+                    ),
                   );
-                } else if (state is ConversationsError) {
-                  return Center(
-                    child: Text(state.message),
-                  );
-                }
-                return const Center(
-                  child: Text('No conversations found'),
-                );
-              },
-            ),
-          ),
+                },
+              );
+            } else if (state is ConversationsError) {
+              return Center(
+                child: Text(state.message),
+              );
+            }
+            return const Center(
+              child: Text('No conversations found'),
+            );
+          },
         ),
-      ],
+      ),
     );
   }
 
