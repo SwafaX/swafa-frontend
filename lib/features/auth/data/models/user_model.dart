@@ -2,10 +2,10 @@ import 'package:swafa_app_frontend/features/auth/domain/entities/user_entity.dar
 
 class UserModel extends UserEntity {
   UserModel({
-    required String id,
-    required String username,
-    required String email,
-  }) : super(id: id, email: email, username: username);
+    required super.id,
+    required super.username,
+    required super.email,
+  });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(

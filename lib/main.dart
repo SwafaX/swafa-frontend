@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swafa_app_frontend/features/newsfeed/presentation/bloc/newsfeed_bloc.dart';
 import 'package:swafa_app_frontend/features/newsfeed/presentation/pages/newsfeed_page.dart';
+import 'package:swafa_app_frontend/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:swafa_app_frontend/features/trade/presentation/bloc/trade_bloc.dart';
 import 'package:swafa_app_frontend/onboarding_page.dart';
 import 'package:swafa_app_frontend/tabs_screen.dart';
@@ -50,6 +51,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => TradeBloc(fetchTradesUseCase: sl()),
         ),
+        BlocProvider(
+          create: (_) => ProfileBloc(fetchProfileUseCase: sl()),
+        )
       ],
       child: MaterialApp(
         title: 'Swafa App',

@@ -102,26 +102,4 @@ class _ConversationsPageState extends State<ConversationsPage> {
       ),
     );
   }
-
-  Widget _buildRecentContact(BuildContext context, String name) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        children: [
-          const CircleAvatar(
-            radius: 30,
-            backgroundImage: NetworkImage(
-                'https://i.pinimg.com/736x/2c/f1/0e/2cf10e90359b48d39cf4ea235e9e6591.jpg'),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Text(
-            name,
-            style: Theme.of(context).textTheme.bodyMedium,
-          )
-        ],
-      ),
-    );
-  }
 }

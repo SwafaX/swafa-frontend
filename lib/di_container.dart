@@ -16,6 +16,10 @@ import 'package:swafa_app_frontend/features/newsfeed/data/datasources/newsfeed_r
 import 'package:swafa_app_frontend/features/newsfeed/data/repositories/newsfeed_repository_impl.dart';
 import 'package:swafa_app_frontend/features/newsfeed/domain/repositories/newsfeed_repository.dart';
 import 'package:swafa_app_frontend/features/newsfeed/domain/usecases/fetch_items_use_case.dart';
+import 'package:swafa_app_frontend/features/profile/data/datasource/profile_remote_data_source.dart';
+import 'package:swafa_app_frontend/features/profile/data/repositories/profile_repository_impl.dart';
+import 'package:swafa_app_frontend/features/profile/domain/repositories/profile_repository.dart';
+import 'package:swafa_app_frontend/features/profile/domain/usecase/fetch_profile_use_case.dart';
 import 'package:swafa_app_frontend/features/trade/data/datasources/trade_remote_data_source.dart';
 import 'package:swafa_app_frontend/features/trade/data/repositories/trade_repository_impl.dart';
 import 'package:swafa_app_frontend/features/trade/domain/repositories/trade_repository.dart';
@@ -28,24 +32,41 @@ void setupDependencies() {
   const String baseUrl = 'https://api.mockapi.com';
 
   // Data Sources
-  sl.registerLazySingleton<AuthRemoteDataSource>(() => AuthRemoteDataSource(baseUrl: baseUrl));
-  sl.registerLazySingleton<ConversationsRemoteDataSource>(() => ConversationsRemoteDataSource(baseUrl: baseUrl));
-  sl.registerLazySingleton<MessagesRemoteDataSource>(() => MessagesRemoteDataSource(baseUrl: baseUrl));
-  sl.registerLazySingleton<NewsfeedRemoteDataSource>(() => NewsfeedRemoteDataSource(baseUrl: baseUrl));
-  sl.registerLazySingleton<TradesRemoteDataSource>(() => TradesRemoteDataSource(baseUrl: baseUrl));
+  sl.registerLazySingleton<AuthRemoteDataSource>(
+      () => AuthRemoteDataSource(baseUrl: baseUrl));
+  sl.registerLazySingleton<ConversationsRemoteDataSource>(
+      () => ConversationsRemoteDataSource(baseUrl: baseUrl));
+  sl.registerLazySingleton<MessagesRemoteDataSource>(
+      () => MessagesRemoteDataSource(baseUrl: baseUrl));
+  sl.registerLazySingleton<NewsfeedRemoteDataSource>(
+      () => NewsfeedRemoteDataSource(baseUrl: baseUrl));
+  sl.registerLazySingleton<TradesRemoteDataSource>(
+      () => TradesRemoteDataSource(baseUrl: baseUrl));
+  sl.registerLazySingleton<ProfileRemoteDataSource>(
+    () => ProfileRemoteDataSource(baseUrl: baseUrl),
+  );
 
   // Repositories
-  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(authRemoteDataSource: sl()));
-  sl.registerLazySingleton<ConversationRepository>(() => ConversationsRepositoryImpl(conversationsRemoteDataSource: sl()));
-  sl.registerLazySingleton<MessageRepository>(() => MessagesRepositoryImpl(messagesRemoteDataSource: sl()));
-  sl.registerLazySingleton<NewsfeedRepository>(() => NewsfeedRepositoryImpl(newsfeedRemoteDataSource: sl()));
-  sl.registerLazySingleton<TradeRepository>(() => TradeRepositoryImpl(tradesRemoteDataSource: sl()));
+  sl.registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImpl(authRemoteDataSource: sl()));
+  sl.registerLazySingleton<ConversationRepository>(
+      () => ConversationsRepositoryImpl(conversationsRemoteDataSource: sl()));
+  sl.registerLazySingleton<MessageRepository>(
+      () => MessagesRepositoryImpl(messagesRemoteDataSource: sl()));
+  sl.registerLazySingleton<NewsfeedRepository>(
+      () => NewsfeedRepositoryImpl(newsfeedRemoteDataSource: sl()));
+  sl.registerLazySingleton<TradeRepository>(
+      () => TradeRepositoryImpl(tradesRemoteDataSource: sl()));
+  sl.registerLazySingleton<ProfileRepository>(
+      () => ProfileRepositoryImpl(profileRemoteDataSource: sl()));
 
   // Use cases
   sl.registerLazySingleton(() => LoginUseCase(repository: sl()));
   sl.registerLazySingleton(() => RegisterUseCase(repository: sl()));
   sl.registerLazySingleton(() => FetchConversationsUseCase(repository: sl()));
-  sl.registerLazySingleton(() => FetchMessagesUseCase(messagesRepository: sl()));
+  sl.registerLazySingleton(
+      () => FetchMessagesUseCase(messagesRepository: sl()));
   sl.registerLazySingleton(() => FetchItemsUseCase(repository: sl()));
   sl.registerLazySingleton(() => FetchTradesUseCase(tradeRepository: sl()));
+  sl.registerLazySingleton(() => FetchProfileUseCase(profileRepository: sl()));
 }

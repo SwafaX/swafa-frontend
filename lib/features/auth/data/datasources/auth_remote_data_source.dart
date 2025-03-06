@@ -26,7 +26,8 @@ class AuthRemoteDataSource {
     );
 
     print(response.body);
-    return TokenModel.fromJson(jsonDecode(response.body)['token']);
+
+    return TokenModel.fromJson(jsonDecode(response.body));
   }
 
   Future<UserModel> register({
@@ -53,7 +54,7 @@ class AuthRemoteDataSource {
       print(response.statusCode);
       print(response.body);
 
-      return UserModel.fromJson(jsonDecode(response.body)['data']);
+      return UserModel.fromJson(jsonDecode(response.body)['user']);
     } catch (e) {
       print('Error: $e');
       rethrow;

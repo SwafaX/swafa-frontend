@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:swafa_app_frontend/core/theme.dart';
 import 'package:swafa_app_frontend/features/conversation/presentation/pages/conversations_page.dart';
 import 'package:swafa_app_frontend/features/newsfeed/presentation/pages/newsfeed_page.dart';
+import 'package:swafa_app_frontend/features/profile/presentation/pages/profile_page.dart';
 import 'package:swafa_app_frontend/features/trade/presentation/pages/trades_page.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -58,7 +59,7 @@ class _TabsScreenState extends State<TabsScreen> {
           NewsFeedPage(),
           TradesPage(),
           ConversationsPage(),
-          Center(child: Text('Nothing to show')),
+          ProfilePage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
