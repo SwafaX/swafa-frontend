@@ -13,6 +13,7 @@ import 'package:swafa_app_frontend/features/newsfeed/presentation/bloc/newsfeed_
 import 'package:swafa_app_frontend/features/newsfeed/presentation/pages/newsfeed_page.dart';
 import 'package:swafa_app_frontend/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:swafa_app_frontend/features/trade/presentation/bloc/trade_bloc.dart';
+import 'package:swafa_app_frontend/features/upload/presentation/bloc/upload_bloc.dart';
 import 'package:swafa_app_frontend/onboarding_page.dart';
 import 'package:swafa_app_frontend/tabs_screen.dart';
 
@@ -53,6 +54,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => ProfileBloc(fetchProfileUseCase: sl()),
+        ),
+        BlocProvider(
+          create: (_) => UploadBloc(uploadUseCase: sl()),
         )
       ],
       child: MaterialApp(

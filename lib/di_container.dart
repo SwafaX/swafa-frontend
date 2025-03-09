@@ -24,12 +24,16 @@ import 'package:swafa_app_frontend/features/trade/data/datasources/trade_remote_
 import 'package:swafa_app_frontend/features/trade/data/repositories/trade_repository_impl.dart';
 import 'package:swafa_app_frontend/features/trade/domain/repositories/trade_repository.dart';
 import 'package:swafa_app_frontend/features/trade/domain/usecases/fetch_trades_use_case.dart';
+import 'package:swafa_app_frontend/features/upload/data/datasource/upload_remote_datasource.dart';
+import 'package:swafa_app_frontend/features/upload/data/repositories/upload_repository_impl.dart';
+import 'package:swafa_app_frontend/features/upload/domain/repositories/upload_repository.dart';
+import 'package:swafa_app_frontend/features/upload/domain/usecases/upload_use_case.dart';
 
 final GetIt sl = GetIt.instance;
 
 void setupDependencies() {
-  // const String baseUrl = 'http://10.0.2.2:8000/api/v1';
-  const String baseUrl = 'https://api.mockapi.com';
+  const String baseUrl = 'http://10.0.2.2:8000/api/v1';
+  // const String baseUrl = 'https://api.mockapi.com';
 
   // Data Sources
   sl.registerLazySingleton<AuthRemoteDataSource>(
@@ -43,8 +47,9 @@ void setupDependencies() {
   sl.registerLazySingleton<TradesRemoteDataSource>(
       () => TradesRemoteDataSource(baseUrl: baseUrl));
   sl.registerLazySingleton<ProfileRemoteDataSource>(
-    () => ProfileRemoteDataSource(baseUrl: baseUrl),
-  );
+      () => ProfileRemoteDataSource(baseUrl: baseUrl));
+  sl.registerLazySingleton<UploadRemoteDatasource>(
+      () => UploadRemoteDatasource(baseUrl: baseUrl));
 
   // Repositories
   sl.registerLazySingleton<AuthRepository>(
@@ -59,6 +64,9 @@ void setupDependencies() {
       () => TradeRepositoryImpl(tradesRemoteDataSource: sl()));
   sl.registerLazySingleton<ProfileRepository>(
       () => ProfileRepositoryImpl(profileRemoteDataSource: sl()));
+  sl.registerLazySingleton<UploadRepository>(
+      () => UploadRepositoryImpl(uploadRemoteDatasource: sl()));
+  
 
   // Use cases
   sl.registerLazySingleton(() => LoginUseCase(repository: sl()));
@@ -69,4 +77,5 @@ void setupDependencies() {
   sl.registerLazySingleton(() => FetchItemsUseCase(repository: sl()));
   sl.registerLazySingleton(() => FetchTradesUseCase(tradeRepository: sl()));
   sl.registerLazySingleton(() => FetchProfileUseCase(profileRepository: sl()));
+  sl.registerLazySingleton(() => UploadUseCase(uploadRepository: sl()));
 }

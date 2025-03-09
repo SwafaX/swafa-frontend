@@ -5,6 +5,7 @@ import 'package:swafa_app_frontend/features/conversation/presentation/pages/conv
 import 'package:swafa_app_frontend/features/newsfeed/presentation/pages/newsfeed_page.dart';
 import 'package:swafa_app_frontend/features/profile/presentation/pages/profile_page.dart';
 import 'package:swafa_app_frontend/features/trade/presentation/pages/trades_page.dart';
+import 'package:swafa_app_frontend/features/upload/presentation/pages/upload_page.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -38,7 +39,7 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var activePageTitle = ['', 'My Trades', 'Message', 'Profile'][_selectedPageIndex];
+    var activePageTitle = ['', 'My Trades', '', 'Message', 'Profile'][_selectedPageIndex];
 
     return Scaffold(
       appBar: activePageTitle != '' ? AppBar(
@@ -58,6 +59,7 @@ class _TabsScreenState extends State<TabsScreen> {
         children: const [
           NewsFeedPage(),
           TradesPage(),
+          UploadPage(),
           ConversationsPage(),
           ProfilePage(),
         ],
@@ -82,6 +84,11 @@ class _TabsScreenState extends State<TabsScreen> {
             icon: SvgPicture.asset('assets/icons/favorite.svg'),
             label: '',
             activeIcon: SvgPicture.asset('assets/icons/favorite_selected.svg'),
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset('assets/icons/upload.svg'),
+            label: '',
+            activeIcon: SvgPicture.asset('assets/icons/upload_selected.svg'),
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset('assets/icons/chat.svg'),
