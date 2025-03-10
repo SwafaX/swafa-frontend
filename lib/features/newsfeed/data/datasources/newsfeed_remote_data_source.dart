@@ -17,7 +17,7 @@ class NewsfeedRemoteDataSource {
       Uri.parse('$baseUrl/newsfeed'),
       headers: {
         'Authorization': 'Bearer $token',
-        // "x-api-key": "480d0192e7054b55b99d2233c0445d83",
+        "x-api-key": "480d0192e7054b55b99d2233c0445d83",
       },
     );
 

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:swafa_app_frontend/core/theme.dart';
 
 class ImageInput extends StatefulWidget {
   final Function(File) onImageSelected; // Callback function
@@ -56,6 +57,7 @@ class _ImageInputState extends State<ImageInput> {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
+          backgroundColor: Colors.white,
           title: const Text('Choose option'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
