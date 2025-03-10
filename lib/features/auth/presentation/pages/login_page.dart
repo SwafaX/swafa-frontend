@@ -1,3 +1,4 @@
+import 'package:swafa_app_frontend/core/theme.dart';
 import 'package:swafa_app_frontend/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:swafa_app_frontend/features/auth/presentation/bloc/auth_event.dart';
 import 'package:swafa_app_frontend/features/auth/presentation/bloc/auth_state.dart';
@@ -62,8 +63,22 @@ class _LoginPageState extends State<LoginPage> {
               BlocConsumer<AuthBloc, AuthState>(
                 builder: (context, state) {
                   if (state is AuthLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return ElevatedButton(
+                      onPressed: null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: DefaultColors.secondary200,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16)),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                      ),
+                      child: const SizedBox(
+                        width: 17,
+                        height: 17,
+                        child: CircularProgressIndicator(
+                          color: DefaultColors.primary500,
+                          strokeWidth: 2.5,
+                        ),
+                      ),
                     );
                   }
                   return AuthButton(
@@ -87,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 20),
               Prompt(
-                title: 'Have not had the account yet ? ',
+                title: 'Have not had the account yet? ',
                 subtitle: 'Sign Up',
                 onTap: () {
                   Navigator.pushNamed(context, '/register');

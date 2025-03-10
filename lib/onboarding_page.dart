@@ -162,7 +162,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               children: [
                 const Text(
                   "Already have an account? ",
-                  style: TextStyle(color: Colors.grey),
+                  style: TextStyle(color: Colors.black),
                 ),
                 GestureDetector(
                   onTap: () {
