@@ -11,13 +11,12 @@ class NewsfeedRemoteDataSource {
   NewsfeedRemoteDataSource({required this.baseUrl});
 
   Future<List<ItemModel>> fetchItems() async {
-    String token = await _storage.read(key: 'token') ?? '';
+    String token = await _storage.read(key: 'accessToken') ?? '';
     
     final response = await http.get(
-      Uri.parse('$baseUrl/newsfeed'),
+      Uri.parse('$baseUrl/items'),
       headers: {
         'Authorization': 'Bearer $token',
-        "x-api-key": "480d0192e7054b55b99d2233c0445d83",
       },
     );
 

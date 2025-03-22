@@ -32,8 +32,8 @@ import 'package:swafa_app_frontend/features/upload/domain/usecases/upload_use_ca
 final GetIt sl = GetIt.instance;
 
 void setupDependencies() {
-  // const String baseUrl = 'http://10.0.2.2:8000/api/v1';
-  const String baseUrl = 'https://api.mockapi.com';
+  const String baseUrl = 'http://swafa.suba-server.org/api/v1';
+  //const String baseUrl = 'https://api.mockapi.com';
 
   // Data Sources
   sl.registerLazySingleton<AuthRemoteDataSource>(
@@ -72,8 +72,7 @@ void setupDependencies() {
   sl.registerLazySingleton(() => LoginUseCase(repository: sl()));
   sl.registerLazySingleton(() => RegisterUseCase(repository: sl()));
   sl.registerLazySingleton(() => FetchConversationsUseCase(repository: sl()));
-  sl.registerLazySingleton(
-      () => FetchMessagesUseCase(messagesRepository: sl()));
+  sl.registerLazySingleton(() => FetchMessagesUseCase(messagesRepository: sl()));
   sl.registerLazySingleton(() => FetchItemsUseCase(repository: sl()));
   sl.registerLazySingleton(() => FetchTradesUseCase(tradeRepository: sl()));
   sl.registerLazySingleton(() => FetchProfileUseCase(profileRepository: sl()));
