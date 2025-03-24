@@ -15,54 +15,71 @@ class UploadRemoteDatasource {
     required String description,
     required List<File> images,
   }) async {
-    String token = await _storage.read(key: 'accessToken') ?? '';
-
+    // Fetch token
+    String? token = await _storage.read(key: 'accessToken');
     print('Upload: test 1');
     print('Token: $token');
 
-    if (token.isEmpty) {
-      throw Exception('No token');
+    if (token == null || token.isEmpty) {
+      throw Exception('No token found');
     }
 
+    // Process each image
     for (File image in images) {
-      //Print file path
+      // File validation
+      print('Image: $image');
+      print('File exists: ${image.existsSync()}');
+      if (!image.existsSync()) {
+        print('File does not exist!');
+        throw Exception('Image file missing: ${image.path}');
+      }
+      int fileSize = await image.length();
+      print('File size: $fileSize bytes');
+
+      // Get pre-signed URL
       String filename = image.path.split('/').last;
-      print(filename);
-
+      print('Filename: $filename');
       final response = await http.get(
-        Uri.parse('$baseUrl/presigned-url?filename=${image.path.split('/').last}&file_type=item',),
-        headers: {
-            'Authorization': 'Bearer $token',
-          },
+        Uri.parse('$baseUrl/presigned-url?filename=$filename&file_type=item'),
+        headers: {'Authorization': 'Bearer $token'},
       );
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
 
-      //Print status code
-      print('Upload: test 2');
-      print(response.statusCode);
-      print(response.body);
+      if (response.statusCode != 200) {
+        throw Exception('Failed to get pre-signed URL: ${response.statusCode}');
+      }
 
-      if (response.statusCode == 200) {
-        // Parse JSON response
-        final presignedUrl = jsonDecode(response.body)['url'];
-        print('Pre-signed URL: $presignedUrl');
+      // Adjust URL and upload
+      final presignedUrl = jsonDecode(response.body)['url'];
+      print('Pre-signed URL: $presignedUrl');
+      String adjustedUrl = presignedUrl; //.replaceAll('localhost:9000', 'minio.suba-server.org');
+      print('Adjusted URL: $adjustedUrl');
 
+      try {
+        // Double-check file before PUT
+        if (!image.existsSync()) {
+          print('File missing before PUT!');
+          throw Exception('File disappeared before upload: ${image.path}');
+        }
+        print('Starting PUT with $fileSize bytes');
         final uploadResponse = await http.put(
-          Uri.parse(presignedUrl),
+          Uri.parse(adjustedUrl),
           body: await image.readAsBytes(),
-          headers: {
-            "Content-Type": "image/jpeg", // Adjust if needed
-          },
+          headers: {"Content-Type": "image/jpg"},
         );
 
         print('test 3');
         print('Upload status: ${uploadResponse.statusCode}');
-        print('Upload response: ${uploadResponse.body}');
+        print('Upload body: ${uploadResponse.body}');
+
 
         if (uploadResponse.statusCode != 200) {
-          throw Exception('Upload failed: ${uploadResponse.statusCode}');
+          throw Exception('Upload failed: ${uploadResponse.statusCode} - ${uploadResponse.body}');
         }
-      } else {
-        throw Exception('Failed to get pre-signed URL: ${response.statusCode}');
+      } catch (e) {
+        print('PUT error: $e');
+        rethrow; // Propagate error to caller
       }
     }
   }
