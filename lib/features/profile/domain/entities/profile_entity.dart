@@ -4,7 +4,7 @@ class ProfileEntity {
   final String desciption;
   final String avatar;
   final String numSwaps;
-  // final List<String> itemImages;
+  final List<String> itemImages;
 
   ProfileEntity({
     required this.id,
@@ -12,6 +12,6 @@ class ProfileEntity {
     required this.desciption,
     required this.avatar,
     required this.numSwaps,
-    // required this.itemImages,
+    required this.itemImages,
   });
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:swafa_app_frontend/features/profile/domain/entities/profile_entity.dart';
 
 class ProfileModel extends ProfileEntity {
@@ -7,7 +9,7 @@ class ProfileModel extends ProfileEntity {
     required super.desciption,
     required super.avatar,
     required super.numSwaps,
-    // required super.itemImages,
+    required super.itemImages,
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -17,7 +19,7 @@ class ProfileModel extends ProfileEntity {
       desciption: json['description'],
       avatar: json['avatar'],
       numSwaps: json['numSwaps'],
-      // itemImages: jsonDecode(json['itemImages']),
+      itemImages: jsonDecode(json['itemImages']),
     );
   }
 }

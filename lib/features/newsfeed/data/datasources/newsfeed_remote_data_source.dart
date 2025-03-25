@@ -20,6 +20,8 @@ class NewsfeedRemoteDataSource {
       },
     );
 
+    print('This is newsfeed');
+    print(response.statusCode);
     print(response.body);
 
     if (response.statusCode == 200) {
