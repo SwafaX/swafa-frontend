@@ -1,17 +1,17 @@
 class ProfileEntity {
   final String id;
   final String name;
-  final String desciption;
+  final String? description; // Optional, with default in ProfileModel
   final String avatar;
-  final String numSwaps;
-  final List<String> itemImages;
+  final int? numSwaps; // Optional, with default in ProfileModel, changed to int
+  final List<String>? itemImages; // Optional, with default in ProfileModel
 
   ProfileEntity({
     required this.id,
     required this.name,
-    required this.desciption,
+    this.description, // Not required, defaults to 'No description available'
     required this.avatar,
-    required this.numSwaps,
-    required this.itemImages,
+    this.numSwaps, // Not required, defaults to 0
+    this.itemImages, // Not required, defaults to []
   });
 }

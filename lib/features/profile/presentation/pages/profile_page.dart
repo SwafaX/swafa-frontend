@@ -43,8 +43,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         backgroundImage: NetworkImage(state.profile.avatar),
                       ),
                       const SizedBox(height: 10),
-                      _buildStatsBox(state.profile.numSwaps, "total swaps"),
-                      _buildStatsBox("10", "items")
+                      _buildStatsBox(state.profile.numSwaps.toString(), "total swaps"),
+                      _buildStatsBox(state.profile.itemImages!.length.toString(), "items")
                     ],
                   ),
                 ),
@@ -65,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Text(
-                    state.profile.desciption,
+                    state.profile.description ?? "",
                     style: const TextStyle(fontSize: 16),
                   ),
                 ),
@@ -104,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     shrinkWrap: true,
                     clipBehavior: Clip.none,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 16, // Replace with actual item count
+                    itemCount: state.profile.itemImages!.length, // Replace with actual item count
 
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -113,15 +113,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisSpacing: 2,
                       childAspectRatio: 1,
                     ),
-                    itemBuilder: (context, index) {
-                      if (index >= 3) {
-                        index = 1;
-                      }
+                    itemBuilder: (_, index) {
                       return Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(
-                                'assets/images/onboarding_${index + 1}.png'),
+                            image: NetworkImage(state.profile.itemImages![index]),
                             fit: BoxFit.cover,
                           ),
                         ),

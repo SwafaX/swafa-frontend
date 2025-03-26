@@ -41,9 +41,7 @@ class ImageUploader {
       // Adjust URL and upload
       final presignedUrl = jsonDecode(response.body)['url'];
       print('Pre-signed URL: $presignedUrl');
-      String adjustedUrl = presignedUrl; // .replaceAll('localhost:9000', 'minio.suba-server.org');
-      print('Adjusted URL: $adjustedUrl');
-
+      
       try {
         // Double-check file before PUT
         if (!image.existsSync()) {
@@ -52,7 +50,7 @@ class ImageUploader {
         }
         print('Starting PUT with $fileSize bytes');
         final uploadResponse = await http.put(
-          Uri.parse(adjustedUrl),
+          Uri.parse(presignedUrl),
           body: await image.readAsBytes(),
           headers: {"Content-Type": "image/jpg"},
         );
@@ -64,8 +62,8 @@ class ImageUploader {
           throw Exception('Upload failed: ${uploadResponse.statusCode} - ${uploadResponse.body}');
         }
 
-        // Store the uploaded image reference
-        uploadedImageUrls.add(filename); // Or use `adjustedUrl` if backend needs the full URL
+        // Store the pre-signed URL instead of filename
+        uploadedImageUrls.add(presignedUrl); // Changed from filename to presignedUrl
       } catch (e) {
         print('PUT error: $e');
         rethrow;

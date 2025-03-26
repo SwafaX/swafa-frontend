@@ -14,7 +14,7 @@ class ProfileRemoteDataSource {
     String token = await _storage.read(key: 'accessToken') ?? '';
 
     final response = await http.get(
-      Uri.parse('$baseUrl/user/'+ token +'/profile'),
+      Uri.parse('$baseUrl/user/me/profile'),
       headers: {
         'Authorization': 'Bearer $token',
         //"x-api-key": "480d0192e7054b55b99d2233c0445d83",
@@ -26,7 +26,7 @@ class ProfileRemoteDataSource {
     print(response.body);
 
     if (response.statusCode == 200) {
-      return ProfileModel.fromJson(jsonDecode(response.body)['profile']);
+      return ProfileModel.fromJson(jsonDecode(response.body)['data']);
     } else {
       throw Exception('Failed to fetch Profile');
     }
