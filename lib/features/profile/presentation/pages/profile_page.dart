@@ -44,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       const SizedBox(height: 10),
                       _buildStatsBox(state.profile.numSwaps.toString(), "total swaps"),
-                      _buildStatsBox(state.profile.itemImages!.length.toString(), "items")
+                      _buildStatsBox(state.items.length.toString(), "items")
                     ],
                   ),
                 ),
@@ -104,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     shrinkWrap: true,
                     clipBehavior: Clip.none,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: state.profile.itemImages!.length, // Replace with actual item count
+                    itemCount: state.items.length, // Replace with actual item count
 
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -117,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       return Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(state.profile.itemImages![index]),
+                            image: NetworkImage(state.items[index].imageUrl),
                             fit: BoxFit.cover,
                           ),
                         ),

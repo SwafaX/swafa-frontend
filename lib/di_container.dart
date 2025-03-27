@@ -16,9 +16,13 @@ import 'package:swafa_app_frontend/features/newsfeed/data/datasources/newsfeed_r
 import 'package:swafa_app_frontend/features/newsfeed/data/repositories/newsfeed_repository_impl.dart';
 import 'package:swafa_app_frontend/features/newsfeed/domain/repositories/newsfeed_repository.dart';
 import 'package:swafa_app_frontend/features/newsfeed/domain/usecases/fetch_items_use_case.dart';
+import 'package:swafa_app_frontend/features/profile/data/datasource/profileItem_remote_datasource.dart';
 import 'package:swafa_app_frontend/features/profile/data/datasource/profile_remote_data_source.dart';
+import 'package:swafa_app_frontend/features/profile/data/repositories/item_repository_impl.dart';
 import 'package:swafa_app_frontend/features/profile/data/repositories/profile_repository_impl.dart';
+import 'package:swafa_app_frontend/features/profile/domain/repositories/item_repository.dart';
 import 'package:swafa_app_frontend/features/profile/domain/repositories/profile_repository.dart';
+import 'package:swafa_app_frontend/features/profile/domain/usecase/fetch_item_use_case.dart';
 import 'package:swafa_app_frontend/features/profile/domain/usecase/fetch_profile_use_case.dart';
 import 'package:swafa_app_frontend/features/trade/data/datasources/trade_remote_data_source.dart';
 import 'package:swafa_app_frontend/features/trade/data/repositories/trade_repository_impl.dart';
@@ -50,6 +54,8 @@ void setupDependencies() {
       () => ProfileRemoteDataSource(baseUrl: baseUrl));
   sl.registerLazySingleton<UploadRemoteDatasource>(
       () => UploadRemoteDatasource(baseUrl: baseUrl));
+  sl.registerLazySingleton<ItemRemoteDataSource>(
+      () => ItemRemoteDataSource(baseUrl: baseUrl));
 
   // Repositories
   sl.registerLazySingleton<AuthRepository>(
@@ -66,6 +72,8 @@ void setupDependencies() {
       () => ProfileRepositoryImpl(profileRemoteDataSource: sl()));
   sl.registerLazySingleton<UploadRepository>(
       () => UploadRepositoryImpl(uploadRemoteDatasource: sl()));
+  sl.registerLazySingleton<ItemProfileRepositoty>(
+      () => ItemRepositoryImpl(itemRemoteDataSource: sl()));
   
 
   // Use cases
@@ -76,5 +84,6 @@ void setupDependencies() {
   sl.registerLazySingleton(() => FetchItemsUseCase(repository: sl()));
   sl.registerLazySingleton(() => FetchTradesUseCase(tradeRepository: sl()));
   sl.registerLazySingleton(() => FetchProfileUseCase(profileRepository: sl()));
+  sl.registerLazySingleton(() => FetchItemProfileUseCase(itemProfileRepositoty: sl()));
   sl.registerLazySingleton(() => UploadUseCase(uploadRepository: sl()));
 }

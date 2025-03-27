@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
           create: (_) => TradeBloc(fetchTradesUseCase: sl()),
         ),
         BlocProvider(
-          create: (_) => ProfileBloc(fetchProfileUseCase: sl()),
+          create: (_) => ProfileBloc(fetchProfileUseCase: sl(), fetchItemUseCase: sl()),
         ),
         BlocProvider(
           create: (_) => UploadBloc(uploadUseCase: sl()),

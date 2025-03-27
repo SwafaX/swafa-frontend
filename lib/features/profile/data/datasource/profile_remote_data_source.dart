@@ -10,7 +10,7 @@ class ProfileRemoteDataSource {
 
   ProfileRemoteDataSource({required this.baseUrl});
 
-  Future<ProfileModel> fetchProfile() async {
+  Future<UserProfileModel> fetchProfile() async {
     String token = await _storage.read(key: 'accessToken') ?? '';
 
     final response = await http.get(
@@ -26,7 +26,7 @@ class ProfileRemoteDataSource {
     print(response.body);
 
     if (response.statusCode == 200) {
-      return ProfileModel.fromJson(jsonDecode(response.body)['data']);
+      return UserProfileModel.fromJson(jsonDecode(response.body)['data']);
     } else {
       throw Exception('Failed to fetch Profile');
     }
