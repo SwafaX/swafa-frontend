@@ -11,10 +11,10 @@ class ItemModel extends ItemEntity {
 
   factory ItemModel.fromJson(Map<String, dynamic> json) {
     return ItemModel(
-        id: json['id'],
+        id: json['ID'],
         title: json['title'],
         description: json['description'],
-        imageUrl: json['imageUrl']
+        imageUrl: json['image_url']
         //userId: json['userId'],
         );
   }

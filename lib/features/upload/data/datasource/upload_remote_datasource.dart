@@ -26,15 +26,18 @@ class UploadRemoteDatasource {
     }
 
     // Upload images and get references
-    List<String> uploadedImageUrls = await _imageUploader.uploadImages(images, token);
+    List<String> uploadedImageUrls =
+        await _imageUploader.uploadImages(images, token);
 
     // Use only the first image URL (since backend expects a single image_url)
     if (uploadedImageUrls.isEmpty) {
       throw Exception('No images uploaded successfully');
     }
     String imageUrl = uploadedImageUrls.first;
+    String trimmedUrl = imageUrl.split('?').first;
+    print('Trimmed image URL: $trimmedUrl');
 
     // Upload item data (title, description, and single image URL)
-    await _itemUploader.uploadItemData(title, description, imageUrl, token);
+    await _itemUploader.uploadItemData(title, description, trimmedUrl, token);
   }
 }

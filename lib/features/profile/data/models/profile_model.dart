@@ -7,14 +7,14 @@ class UserProfileModel extends UserProfileEntity {
     required super.avatar,
     required super.description,
     required super.numSwaps,
-
   });
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
     return UserProfileModel(
       id: json['id'] ?? '', // Matches User.ID
       name: json['name'] ?? 'Unnamed', // Matches User.Name
-      avatar: json['avatar_url'] ?? '', // Matches User.AvatarUrl
+      avatar: json['avatar_url'] ??
+          'https://picsum.photos/id/237/200/300', // Matches User.AvatarUrl
       description: json['description'] ?? 'No description',
       numSwaps: json['numSwaps'] ?? 0, // Kept from original ProfileModel
     );

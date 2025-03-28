@@ -12,7 +12,7 @@ class NewsfeedRemoteDataSource {
 
   Future<List<ItemModel>> fetchItems() async {
     String token = await _storage.read(key: 'accessToken') ?? '';
-    
+
     final response = await http.get(
       Uri.parse('$baseUrl/items'),
       headers: {
@@ -25,7 +25,7 @@ class NewsfeedRemoteDataSource {
     print(response.body);
 
     if (response.statusCode == 200) {
-      List data = jsonDecode(response.body)['item'];
+      List data = jsonDecode(response.body)['data'];
       return data.map((json) => ItemModel.fromJson(json)).toList();
     } else {
       throw Exception('Failed to fetch Messages');
