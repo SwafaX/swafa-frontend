@@ -19,7 +19,7 @@ class TradesRemoteDataSource {
       Uri.parse('$baseUrl/trades'),
       headers: {
         'Authorization': 'Bearer $token',
-        "x-api-key": "b45c0c41a783490093921b95366b933e",
+        //"x-api-key": "b45c0c41a783490093921b95366b933e",
       },
     );
 

@@ -28,84 +28,71 @@ class _ProfilePageState extends State<ProfilePage> {
             child: CircularProgressIndicator(),
           );
         } else if (state is ProfileLoadedState) {
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(state.profile.avatar),
-                      ),
-                      const SizedBox(height: 10),
-                      _buildStatsBox(state.profile.numSwaps, "total swaps"),
-                      _buildStatsBox("10", "items")
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 10),
-
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Text(
-                    state.profile.name,
-                    style: const TextStyle(
-                        fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                ),
-
-                const SizedBox(height: 4),
-
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Text(
-                    state.profile.desciption,
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ),
-
-                const SizedBox(height: 40),
-
-                // My Closet Section
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.grid_on,
-                        size: 30, color: DefaultColors.primary500),
-                    SizedBox(width: 5),
-                    Text(
-                      "My Closet",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundImage: NetworkImage(state.profile.avatar),
                     ),
+                    const SizedBox(height: 10),
+                    _buildStatsBox(
+                        state.profile.numSwaps.toString(), "total swaps"),
+                    _buildStatsBox(state.items.length.toString(), "items"),
                   ],
                 ),
-
-                const Divider(
-                  thickness: 2,
-                  indent: 120,
-                  endIndent: 120,
-                  color: DefaultColors.primary100,
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  state.profile.name,
+                  style: const TextStyle(
+                      fontSize: 22, fontWeight: FontWeight.bold),
                 ),
-                
-                const SizedBox(height: 10),
-
-                // Closet Items Grid
-                Padding(
+              ),
+              const SizedBox(height: 4),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  state.profile.description ?? "",
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ),
+              const SizedBox(height: 40),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.grid_on,
+                      size: 30, color: DefaultColors.primary500),
+                  SizedBox(width: 5),
+                  Text(
+                    "My Closet",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const Divider(
+                thickness: 2,
+                indent: 120,
+                endIndent: 120,
+                color: DefaultColors.primary100,
+              ),
+              const SizedBox(height: 10),
+              // Scrollable Closet Items Grid
+              Expanded(
+                child: Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 6, horizontal: 1),
                   child: GridView.builder(
-                    shrinkWrap: true,
                     clipBehavior: Clip.none,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 16, // Replace with actual item count
-
+                    itemCount: state.items.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
@@ -113,15 +100,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisSpacing: 2,
                       childAspectRatio: 1,
                     ),
-                    itemBuilder: (context, index) {
-                      if (index >= 3) {
-                        index = 1;
-                      }
+                    itemBuilder: (_, index) {
                       return Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(
-                                'assets/images/onboarding_${index + 1}.png'),
+                            image: NetworkImage(state.items[index].imageUrl),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -129,8 +112,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         } else if (state is ProfileErrorState) {
           return Center(

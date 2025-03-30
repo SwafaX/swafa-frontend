@@ -15,6 +15,7 @@ import 'package:swafa_app_frontend/features/profile/presentation/bloc/profile_bl
 import 'package:swafa_app_frontend/features/trade/presentation/bloc/trade_bloc.dart';
 import 'package:swafa_app_frontend/features/upload/presentation/bloc/upload_bloc.dart';
 import 'package:swafa_app_frontend/onboarding_page.dart';
+import 'package:swafa_app_frontend/splash_screen.dart';
 import 'package:swafa_app_frontend/tabs_screen.dart';
 
 void main() async {
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
           create: (_) => TradeBloc(fetchTradesUseCase: sl()),
         ),
         BlocProvider(
-          create: (_) => ProfileBloc(fetchProfileUseCase: sl()),
+          create: (_) => ProfileBloc(fetchProfileUseCase: sl(), fetchItemUseCase: sl()),
         ),
         BlocProvider(
           create: (_) => UploadBloc(uploadUseCase: sl()),
@@ -63,7 +64,7 @@ class MyApp extends StatelessWidget {
         title: 'Swafa App',
         theme: AppTheme.swafaTheme,
         debugShowCheckedModeBanner: false,
-        home: const OnboardingPage(),
+        home: const SplashScreen(),
         routes: {
           '/login': (_) => const LoginPage(),
           '/register': (_) => const RegisterPage(),

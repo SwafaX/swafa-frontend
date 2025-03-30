@@ -1,52 +1,43 @@
 import 'dart:io';
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
+import 'image_uploader.dart';
+import 'item_uploader.dart';
 
 class UploadRemoteDatasource {
   final String baseUrl;
   final _storage = const FlutterSecureStorage();
+  late final ImageUploader _imageUploader;
+  late final ItemUploader _itemUploader;
 
-  UploadRemoteDatasource({required this.baseUrl});
+  UploadRemoteDatasource({required this.baseUrl}) {
+    _imageUploader = ImageUploader(baseUrl: baseUrl, storage: _storage);
+    _itemUploader = ItemUploader(baseUrl: baseUrl, storage: _storage);
+  }
 
   Future<void> uploadItem({
     required String title,
     required String description,
     required List<File> images,
   }) async {
-    String token = await _storage.read(key: 'accessToken') ?? '';
-
-    print('test 1');
-    print('Token: $token');
-
-    for (File image in images) {
-      print(image.path.split('/').last);
-      final response = await http.get(
-        Uri.parse('$baseUrl/presigned-url?filename=${image.path.split('/').last}&file_type=item',),
-        headers: {
-            'Authorization': 'Bearer $token',
-          },
-      );
-
-      print('test 2');
-
-      print(response.statusCode);
-      print(response.body);
-
-      if (response.statusCode == 200) {
-        final presignedUrl = response.body;
-
-        final uploadResponse = await http.put(
-          Uri.parse(presignedUrl),
-          body: await image.readAsBytes(), // Send binary data
-          headers: {
-            "Content-Type": "image/jpeg", // Change based on file type
-          },
-        );
-      } else {
-        throw Exception('Failed to get pre-signed URL');
-      }
-      print('test 3');
+    // Fetch token
+    String? token = await _storage.read(key: 'accessToken');
+    if (token == null || token.isEmpty) {
+      throw Exception('No token found');
     }
+
+    // Upload images and get references
+    List<String> uploadedImageUrls =
+        await _imageUploader.uploadImages(images, token);
+
+    // Use only the first image URL (since backend expects a single image_url)
+    if (uploadedImageUrls.isEmpty) {
+      throw Exception('No images uploaded successfully');
+    }
+    String imageUrl = uploadedImageUrls.first;
+    String trimmedUrl = imageUrl.split('?').first;
+    print('Trimmed image URL: $trimmedUrl');
+
+    // Upload item data (title, description, and single image URL)
+    await _itemUploader.uploadItemData(title, description, trimmedUrl, token);
   }
 }
