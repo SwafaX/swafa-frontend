@@ -64,7 +64,9 @@ class _NewsFeedPageState extends State<NewsFeedPage>
         child: BlocBuilder<NewsfeedBloc, NewsfeedState>(
           builder: (context, state) {
             if (state is NewsfeedLoadingState) {
-              return const ShimmerLoadingCard(height: 600,);
+              return const ShimmerLoadingCard(
+                height: 600,
+              );
             } else if (state is NewsfeedLoadedState) {
               return SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -76,8 +78,7 @@ class _NewsFeedPageState extends State<NewsFeedPage>
                       child: AppinioSwiper(
                         cardBuilder: (context, index) {
                           return Padding(
-                            padding:
-                                const EdgeInsets.only(bottom: 20, top: 80),
+                            padding: const EdgeInsets.only(bottom: 20, top: 80),
                             child: ItemCard(
                               title: state.items[index].title,
                               description: state.items[index].description,
@@ -92,6 +93,16 @@ class _NewsFeedPageState extends State<NewsFeedPage>
                         invertAngleOnBottomDrag: false,
                         cardCount: state.items.length,
                         controller: _swipeController,
+                        onCardPositionChanged: (position) {},
+                        onSwipeEnd: (previousIndex, targetIndex, activity) {
+                          if (activity is Swipe) {
+                            if (activity.direction == AxisDirection.right) {
+                              print('Swipe direction: ${activity.direction}');
+                            } else {
+                              print('Swipe direction: ${activity.direction}');
+                            }
+                          }
+                        },
                       ),
                     ),
                     Row(

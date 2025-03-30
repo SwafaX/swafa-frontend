@@ -10,21 +10,23 @@ class ProfileRemoteDataSource {
 
   ProfileRemoteDataSource({required this.baseUrl});
 
-  Future<ProfileModel> fetchProfile() async {
-    String token = await _storage.read(key: 'token') ?? '';
-    
+  Future<UserProfileModel> fetchProfile() async {
+    String token = await _storage.read(key: 'accessToken') ?? '';
+
     final response = await http.get(
-      Uri.parse('$baseUrl/profile'),
+      Uri.parse('$baseUrl/user/me/profile'),
       headers: {
         'Authorization': 'Bearer $token',
-        "x-api-key": "480d0192e7054b55b99d2233c0445d83",
+        //"x-api-key": "480d0192e7054b55b99d2233c0445d83",
       },
     );
 
+    print('This is profile');
+    print(response.statusCode);
     print(response.body);
 
     if (response.statusCode == 200) {
-      return ProfileModel.fromJson(jsonDecode(response.body)['profile']);
+      return UserProfileModel.fromJson(jsonDecode(response.body)['data']);
     } else {
       throw Exception('Failed to fetch Profile');
     }

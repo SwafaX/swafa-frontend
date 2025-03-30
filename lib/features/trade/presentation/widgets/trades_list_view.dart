@@ -24,23 +24,41 @@ class TradesListView extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Image.network(
-                          trade.tradeImage,
-                          width: 100,
-                          height: 85,
-                          fit: BoxFit.cover,
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1.0,
+                            color: Colors.black
+                          ),
+                          borderRadius: BorderRadius.circular(8.0)
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network(
+                            trade.tradeImage,
+                            width: 90,
+                            height: 85,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       const Icon(Icons.swap_horiz, size: 32),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Image.network(
-                          trade.myImage,
-                          width: 100,
-                          height: 85,
-                          fit: BoxFit.cover,
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1.0,
+                            color: Colors.black
+                          ),
+                          borderRadius: BorderRadius.circular(8.0)
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network(
+                            trade.myImage,
+                            width: 90,
+                            height: 85,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ],

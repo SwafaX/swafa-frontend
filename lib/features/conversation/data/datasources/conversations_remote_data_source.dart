@@ -11,7 +11,7 @@ class ConversationsRemoteDataSource {
   ConversationsRemoteDataSource({required this.baseUrl});
 
   Future<List<ConversationModel>> fetchConversations() async {
-    String token = await _storage.read(key: 'token') ?? '';
+    String token = await _storage.read(key: 'accessToken') ?? '';
 
     final response = await http.get(
       Uri.parse('$baseUrl/conversations'),

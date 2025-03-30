@@ -1,23 +1,22 @@
-import 'package:swafa_app_frontend/features/profile/domain/entities/profile_entity.dart';
+import 'package:swafa_app_frontend/features/profile/domain/entities/user_profile_entity.dart';
 
-class ProfileModel extends ProfileEntity {
-  ProfileModel({
+class UserProfileModel extends UserProfileEntity {
+  UserProfileModel({
     required super.id,
     required super.name,
-    required super.desciption,
     required super.avatar,
+    required super.description,
     required super.numSwaps,
-    // required super.itemImages,
   });
 
-  factory ProfileModel.fromJson(Map<String, dynamic> json) {
-    return ProfileModel(
-      id: json['id'],
-      name: json['name'],
-      desciption: json['description'],
-      avatar: json['avatar'],
-      numSwaps: json['numSwaps'],
-      // itemImages: jsonDecode(json['itemImages']),
+  factory UserProfileModel.fromJson(Map<String, dynamic> json) {
+    return UserProfileModel(
+      id: json['id'] ?? '', // Matches User.ID
+      name: json['name'] ?? 'Unnamed', // Matches User.Name
+      avatar: json['avatar_url'] ??
+          'https://picsum.photos/id/237/200/300', // Matches User.AvatarUrl
+      description: json['description'] ?? 'No description',
+      numSwaps: json['numSwaps'] ?? 0, // Kept from original ProfileModel
     );
   }
 }

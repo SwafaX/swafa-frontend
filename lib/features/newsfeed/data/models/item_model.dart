@@ -6,16 +6,16 @@ class ItemModel extends ItemEntity {
       required super.title,
       required super.description,
       required super.imageUrl
-      // required super.userId,
+      //required super.userId,
       });
 
   factory ItemModel.fromJson(Map<String, dynamic> json) {
     return ItemModel(
-        id: json['id'],
+        id: json['ID'],
         title: json['title'],
         description: json['description'],
-        imageUrl: json['imageUrl']
-        // userId: json['userId'],
+        imageUrl: json['image_url']
+        //userId: json['userId'],
         );
   }
 }
