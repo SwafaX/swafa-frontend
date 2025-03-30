@@ -13,7 +13,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final _storage = const FlutterSecureStorage();
-  
+
   startTimer() async {
     String token = await _storage.read(key: 'accessToken') ?? '';
 
@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(seconds: 3),
       () {
         if (token.isNotEmpty) {
-          Navigator.pushReplacementNamed(context, '/tab');
+          Navigator.pushReplacementNamed(context, '/tabs');
         } else {
           Navigator.pushReplacement(
             context,
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
     startTimer();
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

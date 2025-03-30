@@ -48,13 +48,15 @@ class MyApp extends StatelessWidget {
           create: (_) => MessageBloc(fetchMessagesUseCase: sl()),
         ),
         BlocProvider(
-          create: (_) => NewsfeedBloc(fetchItemsUsecase: sl()),
+          create: (_) =>
+              NewsfeedBloc(fetchItemsUsecase: sl(), sendMessageUseCase: sl()),
         ),
         BlocProvider(
           create: (_) => TradeBloc(fetchTradesUseCase: sl()),
         ),
         BlocProvider(
-          create: (_) => ProfileBloc(fetchProfileUseCase: sl(), fetchItemUseCase: sl()),
+          create: (_) =>
+              ProfileBloc(fetchProfileUseCase: sl(), fetchItemUseCase: sl()),
         ),
         BlocProvider(
           create: (_) => UploadBloc(uploadUseCase: sl()),

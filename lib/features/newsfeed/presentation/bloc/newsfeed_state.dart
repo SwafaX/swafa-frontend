@@ -17,3 +17,19 @@ class NewsfeedErrorState extends NewsfeedState {
 
   NewsfeedErrorState({required this.message});
 }
+
+class MessageInputState extends NewsfeedState {
+  final List<ItemEntity> items;
+  final String currentItemId;
+  MessageInputState(this.items, this.currentItemId);
+}
+
+class MessageSendingState extends NewsfeedState {
+  final List<ItemEntity> items;
+  MessageSendingState(this.items);
+}
+
+class MessageSentState extends NewsfeedState {
+  final List<ItemEntity> items;
+  MessageSentState(this.items);
+}

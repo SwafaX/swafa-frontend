@@ -13,9 +13,13 @@ import 'package:swafa_app_frontend/features/message/domain/repositories/message_
 import 'package:swafa_app_frontend/features/message/domain/usecases/fetch_messages_use_case.dart';
 import 'package:get_it/get_it.dart';
 import 'package:swafa_app_frontend/features/newsfeed/data/datasources/newsfeed_remote_data_source.dart';
+import 'package:swafa_app_frontend/features/newsfeed/data/datasources/sendmessage_remote_data_source.dart';
 import 'package:swafa_app_frontend/features/newsfeed/data/repositories/newsfeed_repository_impl.dart';
+import 'package:swafa_app_frontend/features/newsfeed/data/repositories/sendMessage_repository_impl.dart';
 import 'package:swafa_app_frontend/features/newsfeed/domain/repositories/newsfeed_repository.dart';
+import 'package:swafa_app_frontend/features/newsfeed/domain/repositories/sendMessage_repository.dart';
 import 'package:swafa_app_frontend/features/newsfeed/domain/usecases/fetch_items_use_case.dart';
+import 'package:swafa_app_frontend/features/newsfeed/domain/usecases/sendMessage_use_case.dart';
 import 'package:swafa_app_frontend/features/profile/data/datasource/profileItem_remote_datasource.dart';
 import 'package:swafa_app_frontend/features/profile/data/datasource/profile_remote_data_source.dart';
 import 'package:swafa_app_frontend/features/profile/data/repositories/item_repository_impl.dart';
@@ -56,6 +60,8 @@ void setupDependencies() {
       () => UploadRemoteDatasource(baseUrl: baseUrl));
   sl.registerLazySingleton<ItemRemoteDataSource>(
       () => ItemRemoteDataSource(baseUrl: baseUrl));
+  sl.registerLazySingleton<SendmessageRemoteDataSource>(
+      () => SendmessageRemoteDataSource(baseUrl: baseUrl));
 
   // Repositories
   sl.registerLazySingleton<AuthRepository>(
@@ -74,16 +80,20 @@ void setupDependencies() {
       () => UploadRepositoryImpl(uploadRemoteDatasource: sl()));
   sl.registerLazySingleton<ItemProfileRepositoty>(
       () => ItemRepositoryImpl(itemRemoteDataSource: sl()));
-  
+  sl.registerLazySingleton<SendmessageRepository>(
+      () => SendmessageRepositoryImpl(sendmessageRemoteDataSource: sl()));
 
   // Use cases
   sl.registerLazySingleton(() => LoginUseCase(repository: sl()));
   sl.registerLazySingleton(() => RegisterUseCase(repository: sl()));
   sl.registerLazySingleton(() => FetchConversationsUseCase(repository: sl()));
-  sl.registerLazySingleton(() => FetchMessagesUseCase(messagesRepository: sl()));
+  sl.registerLazySingleton(
+      () => FetchMessagesUseCase(messagesRepository: sl()));
   sl.registerLazySingleton(() => FetchItemsUseCase(repository: sl()));
   sl.registerLazySingleton(() => FetchTradesUseCase(tradeRepository: sl()));
   sl.registerLazySingleton(() => FetchProfileUseCase(profileRepository: sl()));
-  sl.registerLazySingleton(() => FetchItemProfileUseCase(itemProfileRepositoty: sl()));
+  sl.registerLazySingleton(
+      () => FetchItemProfileUseCase(itemProfileRepositoty: sl()));
   sl.registerLazySingleton(() => UploadUseCase(uploadRepository: sl()));
+  sl.registerLazySingleton(() => SendmessageUseCase(repository: sl()));
 }
