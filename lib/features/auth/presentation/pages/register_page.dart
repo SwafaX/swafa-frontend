@@ -1,3 +1,4 @@
+import 'package:swafa_app_frontend/core/theme.dart';
 import 'package:swafa_app_frontend/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:swafa_app_frontend/features/auth/presentation/bloc/auth_event.dart';
 import 'package:swafa_app_frontend/features/auth/presentation/bloc/auth_state.dart';
@@ -18,7 +19,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   @override
   void dispose() {
@@ -52,7 +54,8 @@ class _RegisterPageState extends State<RegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 70, left: 70, bottom: 70),
+                  padding:
+                      const EdgeInsets.only(right: 70, left: 70, bottom: 70),
                   child: Image.asset('assets/images/branding_name.png'),
                 ),
                 AuthInputField(
@@ -81,13 +84,27 @@ class _RegisterPageState extends State<RegisterPage> {
                   isPassword: true,
                 ),
                 const SizedBox(height: 35),
-                  
+
                 // if the state changes, BlocConsumer updates the part of our page that we want it to chnage
                 BlocConsumer<AuthBloc, AuthState>(
                   builder: (context, state) {
                     if (state is AuthLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                      return ElevatedButton(
+                        onPressed: null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: DefaultColors.secondary200,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                        ),
+                        child: const SizedBox(
+                          width: 17,
+                          height: 17,
+                          child: CircularProgressIndicator(
+                            color: DefaultColors.primary500,
+                            strokeWidth: 2.5,
+                          ),
+                        ),
                       );
                     }
                     return AuthButton(
@@ -105,10 +122,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     }
                   },
                 ),
-                  
+
                 const SizedBox(height: 20),
                 Prompt(
-                  title: 'Already have an account ? ',
+                  title: 'Already have an account? ',
                   subtitle: 'Sign In',
                   onTap: () {
                     Navigator.pushNamed(context, '/login');
