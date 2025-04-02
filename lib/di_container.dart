@@ -96,4 +96,6 @@ void setupDependencies() {
       () => FetchItemProfileUseCase(itemProfileRepositoty: sl()));
   sl.registerLazySingleton(() => UploadUseCase(uploadRepository: sl()));
   sl.registerLazySingleton(() => SendmessageUseCase(repository: sl()));
+  sl.registerLazySingleton(() => AcceptTradeUseCase(repository: sl()));
+  sl.registerLazySingleton(() => DeclineTradeUseCase(repository: sl()));
 }

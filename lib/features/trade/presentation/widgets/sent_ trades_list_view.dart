@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:swafa_app_frontend/features/trade/domain/entities/trade_entity.dart';
 
-class TradesListView extends StatelessWidget {
+class SentTradesListView extends StatelessWidget {
   final List<TradeEntity> trades;
 
-  const TradesListView({super.key, required this.trades});
+  const SentTradesListView({super.key, required this.trades});
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +26,8 @@ class TradesListView extends StatelessWidget {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1.0,
-                            color: Colors.black
-                          ),
-                          borderRadius: BorderRadius.circular(8.0)
-                        ),
+                            border: Border.all(width: 1.0, color: Colors.black),
+                            borderRadius: BorderRadius.circular(8.0)),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
                           child: Image.network(
@@ -45,12 +41,8 @@ class TradesListView extends StatelessWidget {
                       const Icon(Icons.swap_horiz, size: 32),
                       Container(
                         decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1.0,
-                            color: Colors.black
-                          ),
-                          borderRadius: BorderRadius.circular(8.0)
-                        ),
+                            border: Border.all(width: 1.0, color: Colors.black),
+                            borderRadius: BorderRadius.circular(8.0)),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
                           child: Image.network(

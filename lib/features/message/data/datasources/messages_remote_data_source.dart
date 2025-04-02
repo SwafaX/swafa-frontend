@@ -11,13 +11,19 @@ class MessagesRemoteDataSource {
   MessagesRemoteDataSource({required this.baseUrl});
 
   Future<List<MessageModel>> fetchMessages(String conversationId) async {
-    String token = await _storage.read(key: 'token') ?? '';
+    String token = await _storage.read(key: 'accessToken') ?? '';
     final response = await http.get(
-      Uri.parse('$baseUrl/messages/$conversationId'),
+      Uri.parse('$baseUrl/$conversationId/messages'),
       headers: {
         'Authorization': 'Bearer $token',
       },
     );
+
+    // Debugging logs
+    print('Conversation ID: $conversationId');
+    print('Messages response status: ${response.statusCode}');
+    print('Messages response body: ${response.body}');
+
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body);
       return data.map((json) => MessageModel.fromJson(json)).toList();

@@ -94,66 +94,73 @@ class _NewsFeedPageState extends State<NewsFeedPage>
   }
 
   Widget _buildMessageBar(String itemId) {
-    // Trigger the bottom sheet immediately after the widget builds
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (BuildContext context) {
-          return Padding(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-              left: 16.0,
-              right: 16.0,
-              top: 16.0,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: _messageController,
-                  decoration: const InputDecoration(
-                    hintText: 'Type your message...',
-                    border: OutlineInputBorder(),
+      if (mounted) {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (BuildContext context) {
+            return Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+                left: 16.0,
+                right: 16.0,
+                top: 16.0,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: _messageController,
+                    decoration: const InputDecoration(
+                      hintText: 'Type your message...',
+                      border: OutlineInputBorder(),
+                    ),
+                    maxLines: 3,
                   ),
-                  maxLines: 3,
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        _swipeController.unswipe(); // Reverse the last swipe
-                        _messageController.clear();
-                        Navigator.pop(context); // Close the sheet
-                      },
-                      child: const Text('Cancel'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        BlocProvider.of<NewsfeedBloc>(context).add(
-                          SendMessageEvent(
-                            itemId: itemId,
-                            message: _messageController.text,
-                          ),
-                        );
-                        _messageController.clear();
-                        Navigator.pop(context); // Close the sheet
-                      },
-                      child: const Text('Send'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        },
-      );
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          _swipeController.unswipe();
+                          _messageController.clear();
+                          BlocProvider.of<NewsfeedBloc>(context)
+                              .add(CancelMessageEvent());
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Cancel'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          BlocProvider.of<NewsfeedBloc>(context).add(
+                            SendMessageEvent(
+                              itemId: itemId,
+                              message: _messageController.text,
+                            ),
+                          );
+                          _messageController.clear();
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Send'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        ).whenComplete(() {
+          // Called when the bottom sheet is dismissed (e.g., tapping outside)
+          _swipeController.unswipe(); // Bring back the card
+          _messageController.clear(); // Clear the text field
+          BlocProvider.of<NewsfeedBloc>(context)
+              .add(CancelMessageEvent()); // Reset state
+        });
+      }
     });
-
-    // Return an empty SizedBox since the bottom sheet handles the UI
-    return const SizedBox.shrink();
+    return _buildDefaultButtons();
   }
 
   @override

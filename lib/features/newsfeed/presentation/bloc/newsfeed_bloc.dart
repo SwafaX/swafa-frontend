@@ -54,9 +54,8 @@ class NewsfeedBloc extends Bloc<NewsfeedEvent, NewsfeedState> {
 
   void _onCancelMessage(CancelMessageEvent event, Emitter<NewsfeedState> emit) {
     if (state is MessageInputState || state is MessageSendingState) {
-      // Handle both states
-      final items = (state as dynamic).items; // Dynamic cast to access items
-      emit(NewsfeedLoadedState(items: items));
+      final items = (state as dynamic).items; // Access items dynamically
+      emit(NewsfeedLoadedState(items: items)); // Reset to loaded state
     }
   }
 }

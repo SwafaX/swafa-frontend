@@ -81,8 +81,7 @@ class _ConversationsPageState extends State<ConversationsPage> {
       ),
       leading: const CircleAvatar(
         radius: 30,
-        backgroundImage: NetworkImage(
-            'https://i.pinimg.com/736x/bd/6b/82/bd6b82154b54c573b47be372c8c00d45.jpg'),
+        backgroundImage: NetworkImage('https://picsum.photos/id/237/200/300'),
       ),
       title: Text(
         name,

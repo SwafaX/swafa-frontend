@@ -21,6 +21,7 @@ class NewsfeedRemoteDataSource {
     );
 
     print('This is newsfeed');
+    print('Token: $token');
     print(response.statusCode);
     print(response.body);
 

@@ -52,7 +52,13 @@ class MyApp extends StatelessWidget {
               NewsfeedBloc(fetchItemsUsecase: sl(), sendMessageUseCase: sl()),
         ),
         BlocProvider(
-          create: (_) => TradeBloc(fetchTradesUseCase: sl()),
+          create: (_) => TradeSentBloc(fetchTradesUseCase: sl()),
+        ),
+        BlocProvider(
+          create: (_) => TradeReceivedBloc(
+              fetchTradesUseCase: sl(),
+              acceptTradeUseCase: sl(),
+              declineTradeUseCase: sl()),
         ),
         BlocProvider(
           create: (_) =>

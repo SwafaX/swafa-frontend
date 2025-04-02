@@ -6,5 +6,9 @@ class UploadEntity {
   final String description;
   final List<File> images;
 
-  UploadEntity({required this.id, required this.title, required this.description, required this.images});
+  UploadEntity(
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.images});
 }

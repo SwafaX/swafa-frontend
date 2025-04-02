@@ -6,7 +6,31 @@ class FetchTradesUseCase {
 
   FetchTradesUseCase({required this.tradeRepository});
 
-  Future<List<TradeEntity>> call() async {
-    return await tradeRepository.fetchTrade();
+  Future<List<TradeEntity>> callSent() async {
+    return await tradeRepository.fetchSentTrade();
+  }
+
+  Future<List<TradeEntity>> callReceived() async {
+    return await tradeRepository.fetchReceivedTrade();
+  }
+}
+
+class AcceptTradeUseCase {
+  final TradeRepository repository;
+
+  AcceptTradeUseCase({required this.repository});
+
+  Future<void> call(String tradeId) async {
+    return await repository.acceptTrade(tradeId);
+  }
+}
+
+class DeclineTradeUseCase {
+  final TradeRepository repository;
+
+  DeclineTradeUseCase({required this.repository});
+
+  Future<void> call(String tradeId) async {
+    return await repository.declineTrade(tradeId);
   }
 }

@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swafa_app_frontend/features/trade/presentation/bloc/trade_bloc.dart';
 import 'package:swafa_app_frontend/features/trade/presentation/bloc/trade_event.dart';
 import 'package:swafa_app_frontend/features/trade/presentation/bloc/trade_state.dart';
-import 'package:swafa_app_frontend/features/trade/presentation/widgets/trades_list_view.dart';
+import 'package:swafa_app_frontend/features/trade/presentation/widgets/received_trades_list_view.dart';
+import 'package:swafa_app_frontend/features/trade/presentation/widgets/sent_%20trades_list_view.dart';
 import 'package:swafa_app_frontend/shimmer/shimmer_loading_card.dart';
 
 class TradesPage extends StatefulWidget {
@@ -15,14 +16,14 @@ class TradesPage extends StatefulWidget {
 
 class _TradesPageState extends State<TradesPage>
     with AutomaticKeepAliveClientMixin<TradesPage> {
-
   @override
   bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<TradeBloc>(context).add(FetchTradesEvent());
+    BlocProvider.of<TradeSentBloc>(context).add(FetchTradesEvent());
+    BlocProvider.of<TradeReceivedBloc>(context).add(FetchTradesEvent());
   }
 
   @override
@@ -67,19 +68,20 @@ class _TradesPageState extends State<TradesPage>
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 30),
-                    child: BlocBuilder<TradeBloc, TradeState>(
+                    child: BlocBuilder<TradeSentBloc, TradeState>(
                       builder: (context, state) {
                         if (state is TradesLoadingState) {
                           return ListView(
                             physics: const AlwaysScrollableScrollPhysics(),
                             children: List.generate(
                                 3,
-                                (_) =>
-                                    const ShimmerLoadingCard(height: 170,)), // Show shimmer effect for 3 cards
+                                (_) => const ShimmerLoadingCard(
+                                      height: 170,
+                                    )), // Show shimmer effect for 3 cards
                           );
                         } else if (state is TradesLoadedState) {
                           final trades = state.trades;
-                          return TradesListView(trades: trades);
+                          return SentTradesListView(trades: trades);
                         } else if (state is TradesError) {
                           return Center(
                             child: Text(state.message),
@@ -91,7 +93,33 @@ class _TradesPageState extends State<TradesPage>
                       },
                     ),
                   ),
-                  const Center(child: Text("No trades received yet!")),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: BlocBuilder<TradeReceivedBloc, TradeState>(
+                      builder: (context, state) {
+                        if (state is TradesLoadingState) {
+                          return ListView(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            children: List.generate(
+                                3,
+                                (_) => const ShimmerLoadingCard(
+                                      height: 170,
+                                    )), // Show shimmer effect for 3 cards
+                          );
+                        } else if (state is TradesLoadedState) {
+                          final trades = state.trades;
+                          return ReceivedTradesListView(trades: trades);
+                        } else if (state is TradesError) {
+                          return Center(
+                            child: Text(state.message),
+                          );
+                        }
+                        return const Center(
+                          child: Text('No trades found'),
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
